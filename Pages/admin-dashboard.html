@@ -1,0 +1,86 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard | ReturnFlow</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body class="dashboard-page">
+<div class="app-shell">
+
+    <!-- Sidebar -->
+    <aside class="sidebar offcanvas-lg offcanvas-start" id="sidebar" tabindex="-1" aria-label="Sidebar">
+        <div class="sidebar-inner">
+            <div class="sidebar-head">
+                <a class="navbar-brand" href="/index.html">Return<span class="brand-accent">Flow</span></a>
+                <button type="button" class="btn-close btn-close-white d-lg-none" data-bs-dismiss="offcanvas" data-bs-target="#sidebar" aria-label="Close menu"></button>
+            </div>
+            <div class="sidebar-role">
+                <small>Signed in to</small>
+                <strong>Administrator Workspace</strong>
+            </div>
+            <nav class="sidebar-nav" aria-label="Page sections"><a href="#overview" class="active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>Overview</a><a href="#management"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>System management</a><a href="#activity"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>Recent activity</a></nav>
+            <div class="sidebar-foot">
+                <a href="/index.html" class="btn btn-outline-light btn-sm w-100">Logout</a>
+            </div>
+        </div>
+    </aside>
+
+    <div class="app-main">
+        <!-- Topbar -->
+        <header class="topbar">
+            <button class="btn btn-outline-light btn-sm d-lg-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebar" aria-controls="sidebar">Menu</button>
+            <div class="topbar-title">Admin dashboard</div>
+            <span class="role-chip">Administrator</span>
+        </header>
+
+        <main class="content">
+            <div class="page-head"><h2>Admin Dashboard</h2><p class="text-muted">Monitor platform activity and manage system resources.</p></div>
+            <div class="row g-3 mb-4" id="overview">
+            <div class="col-sm-6 col-xl-3"><div class="dashboard-card stat p-4 h-100"><p>Total users</p><h2>1,240</h2><small>Registered platform users</small></div></div>
+            <div class="col-sm-6 col-xl-3"><div class="dashboard-card stat p-4 h-100"><p>Total products</p><h2>860</h2><small>Products registered</small></div></div>
+            <div class="col-sm-6 col-xl-3"><div class="dashboard-card stat p-4 h-100"><p>Total orders</p><h2>3,580</h2><small>Orders recorded</small></div></div>
+            <div class="col-sm-6 col-xl-3"><div class="dashboard-card stat p-4 h-100"><p>Return requests</p><h2>248</h2><small>Total return requests</small></div></div>
+            </div>
+
+            <section class="mb-4" id="management">
+                <div class="page-head" style="margin-bottom:16px"><h4 class="mb-1">System management</h4><p class="text-muted small">Overview of the platform's main management areas.</p></div>
+                <div class="row g-3">
+                <div class="col-md-4"><div class="dashboard-card management-card p-4 h-100">
+                    <h5>User management</h5><p class="text-muted">Monitor registered users and manage access to the ReturnFlow platform.</p>
+                    <div class="management-meta mt-auto"><span class="text-muted small">Platform users</span><span class="fw-semibold">1,240</span></div>
+                </div></div>
+                <div class="col-md-4"><div class="dashboard-card management-card p-4 h-100">
+                    <h5>Product management</h5><p class="text-muted">Review the product catalog and maintain product-related information.</p>
+                    <div class="management-meta mt-auto"><span class="text-muted small">Registered products</span><span class="fw-semibold">860</span></div>
+                </div></div>
+                <div class="col-md-4"><div class="dashboard-card management-card p-4 h-100">
+                    <h5>Order management</h5><p class="text-muted">Monitor order records and review order-related activity across the platform.</p>
+                    <div class="management-meta mt-auto"><span class="text-muted small">Recorded orders</span><span class="fw-semibold">3,580</span></div>
+                </div></div>
+                </div>
+            </section>
+
+            <section class="dashboard-card p-4" id="activity">
+                <div class="card-head"><div><h4>Recent activity</h4><p class="text-muted">A record of recent actions across the platform.</p></div><span class="badge">Activity log</span></div>
+                <div class="table-responsive"><table class="table align-middle"><thead><tr><th>Activity ID</th><th>User</th><th>Activity</th><th>Module</th><th>Date</th><th>Status</th></tr></thead><tbody><tr><td>ACT-001</td><td>Ali Khan</td><td>Submitted a return request</td><td>Returns</td><td>06 Nov 2026</td><td><span class="status-badge status-pending">Pending</span></td></tr><tr><td>ACT-002</td><td>Sara Ahmed</td><td>Product inspection completed</td><td>Inspection</td><td>06 Nov 2026</td><td><span class="status-badge status-approved">Completed</span></td></tr><tr><td>ACT-003</td><td>Usman Raza</td><td>Return request rejected</td><td>Returns</td><td>05 Nov 2026</td><td><span class="status-badge status-rejected">Rejected</span></td></tr><tr><td>ACT-004</td><td>Ayesha Malik</td><td>New account registered</td><td>Users</td><td>05 Nov 2026</td><td><span class="status-badge status-approved">Completed</span></td></tr></tbody></table></div>
+                <div class="table-note"><small class="text-muted">Sample activity records shown for demonstration purposes.</small></div>
+            </section>
+        </main>
+
+        <footer class="footer py-3 mt-4">
+            <div class="px-3 px-lg-4"><small class="text-muted">© 2026 ReturnFlow. Administrator Portal.</small></div>
+        </footer>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="/js/script.js"></script>
+</body>
+</html>

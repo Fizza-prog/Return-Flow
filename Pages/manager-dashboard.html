@@ -1,0 +1,107 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manager Dashboard | ReturnFlow</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body class="dashboard-page">
+    <div class="app-shell">
+
+        <!-- Sidebar -->
+        <aside class="sidebar offcanvas-lg offcanvas-start" id="sidebar" tabindex="-1" aria-label="Sidebar">
+            <div class="sidebar-inner">
+                <div class="sidebar-head">
+                    <a class="navbar-brand" href="/index.html">Return<span class="brand-accent">Flow</span></a>
+                    <button type="button" class="btn-close btn-close-white d-lg-none" data-bs-dismiss="offcanvas" data-bs-target="#sidebar" aria-label="Close menu"></button>
+                </div>
+                <div class="sidebar-role">
+                    <small>Signed in to</small>
+                    <strong>Manager Workspace</strong>
+                </div>
+                <nav class="sidebar-nav" aria-label="Page sections"><a href="#overview" class="active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1" /><rect x="14" y="3" width="7" height="7" rx="1" /><rect x="3" y="14" width="7" height="7" rx="1" /><rect x="14" y="14" width="7" height="7" rx="1" /></svg>Overview</a><a href="#requests"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01" /></svg>Return requests</a><a href="#inspection"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 11l3 3L22 4" /><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" /></svg>Product inspection</a></nav>
+                <div class="sidebar-foot">
+                    <a href="/index.html" class="btn btn-outline-light btn-sm w-100">Logout</a>
+                </div>
+            </div>
+        </aside>
+
+        <div class="app-main">
+            <!-- Topbar -->
+            <header class="topbar">
+                <button class="btn btn-outline-light btn-sm d-lg-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebar" aria-controls="sidebar">Menu</button>
+                <div class="topbar-title">Manager dashboard</div>
+                <span class="role-chip">Manager</span>
+            </header>
+
+            <main class="content">
+                <div class="page-head"><h2>Manager Dashboard</h2><p class="text-muted">Review return requests and manage product inspections.</p></div>
+                <div class="row g-3 mb-4" id="overview">
+                    <div class="col-sm-6 col-xl-3"><div class="dashboard-card stat p-4 h-100"><p>Total requests</p><h2>248</h2><small>All submitted requests</small></div></div>
+                    <div class="col-sm-6 col-xl-3"><div class="dashboard-card stat p-4 h-100"><p>Pending</p><h2>36</h2><small>Awaiting review</small></div></div>
+                    <div class="col-sm-6 col-xl-3"><div class="dashboard-card stat p-4 h-100"><p>Approved</p><h2>172</h2><small>Accepted requests</small></div></div>
+                    <div class="col-sm-6 col-xl-3"><div class="dashboard-card stat p-4 h-100"><p>Rejected</p><h2>40</h2><small>Declined requests</small></div></div>
+                </div>
+
+                <section class="dashboard-card p-4 mb-4" id="requests">
+                    <div class="card-head"><div><h4>Return requests</h4><p class="text-muted">Review submitted requests and take appropriate action.</p></div><span class="badge">Recent requests</span></div>
+                    <div class="table-responsive"><table class="table align-middle"><thead><tr><th>Request ID</th><th>Customer</th><th>Product</th><th>Reason</th><th>Status</th><th>Actions</th></tr></thead><tbody><tr><td>RET-001</td><td>Ali Khan</td><td>Wireless Headphones</td><td>Damaged product</td><td><span class="status-badge status-pending">Pending</span></td><td><div class="d-flex flex-wrap gap-2"><button type="button" class="btn btn-sm btn-primary">Approve</button><button type="button" class="btn btn-sm btn-outline-light">Reject</button><button type="button" class="btn btn-sm btn-outline-light">Inspect</button></div></td></tr><tr><td>RET-002</td><td>Sara Ahmed</td><td>Smart Watch</td><td>Wrong item received</td><td><span class="status-badge status-approved">Approved</span></td><td><div class="d-flex flex-wrap gap-2"><button type="button" class="btn btn-sm btn-outline-light">Inspect</button></div></td></tr><tr><td>RET-003</td><td>Usman Raza</td><td>Bluetooth Speaker</td><td>Not working</td><td><span class="status-badge status-rejected">Rejected</span></td><td><span class="text-muted small">No action</span></td></tr><tr><td>RET-004</td><td>Ayesha Malik</td><td>USB Keyboard</td><td>Missing keys</td><td><span class="status-badge status-pending">Pending</span></td><td><div class="d-flex flex-wrap gap-2"><button type="button" class="btn btn-sm btn-primary">Approve</button><button type="button" class="btn btn-sm btn-outline-light">Reject</button><button type="button" class="btn btn-sm btn-outline-light">Inspect</button></div></td></tr></tbody></table></div>
+                    <div class="table-note"><small class="text-muted">Sample return requests shown for demonstration purposes.</small></div>
+                </section>
+
+                <section class="dashboard-card p-4" id="inspection">
+                    <div class="card-head"><div><h4>Product inspection</h4><p class="text-muted">Record product condition and inspection findings.</p></div></div>
+                    <form id="inspectionForm">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label for="requestId" class="form-label">Return request ID</label>
+                                <input type="text" class="form-control" id="requestId" placeholder="e.g. RET-001" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="condition" class="form-label">Product condition</label>
+                                <select class="form-select" id="condition" required>
+                                    <option value="" selected disabled>Select product condition</option>
+                                    <option value="Excellent">Excellent</option>
+                                    <option value="Good">Good</option>
+                                    <option value="Damaged">Damaged</option>
+                                    <option value="Defective">Defective</option>
+                                </select>
+                            </div>
+                            <div class="col-12">
+                                <label for="findings" class="form-label">Inspection findings</label>
+                                <textarea class="form-control" id="findings" rows="4" placeholder="Describe the inspection results..." required></textarea>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="disposition" class="form-label">Product disposition</label>
+                                <select class="form-select" id="disposition" required>
+                                    <option value="" selected disabled>Select disposition</option>
+                                    <option value="Restock">Restock</option>
+                                    <option value="Repair">Repair</option>
+                                    <option value="Replace">Replace</option>
+                                    <option value="Discard">Discard</option>
+                                </select>
+                            </div>
+                            <div class="col-12">
+                                <button type="submit" class="btn btn-primary px-4">Save inspection</button>
+                            </div>
+                        </div>
+                    </form>
+                </section>
+            </main>
+
+            <footer class="footer py-3 mt-4">
+                <div class="px-3 px-lg-4"><small class="text-muted">© 2026 ReturnFlow. Manager Portal.</small></div>
+            </footer>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/script.js"></script>
+</body>
+</html>
