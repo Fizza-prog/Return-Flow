@@ -1,0 +1,383 @@
+﻿@model ReturnFlow.Models.ViewModels.CustomerDashboardViewModel
+
+@{
+    ViewData["Title"] = "Customer Dashboard";
+}
+
+<div class="app-shell">
+
+    <!-- Sidebar -->
+    <aside class="sidebar offcanvas-lg offcanvas-start"
+           id="sidebar"
+           tabindex="-1"
+           aria-label="Sidebar">
+
+        <div class="sidebar-inner">
+
+            <div class="sidebar-head">
+                <a class="navbar-brand"
+                   asp-controller="Home"
+                   asp-action="Index">
+                    Return<span class="brand-accent">Flow</span>
+                </a>
+
+                <button type="button"
+                        class="btn-close btn-close-white d-lg-none"
+                        data-bs-dismiss="offcanvas"
+                        data-bs-target="#sidebar"
+                        aria-label="Close menu">
+                </button>
+            </div>
+
+            <div class="sidebar-role">
+                <small>Signed in to</small>
+                <strong>Customer Workspace</strong>
+            </div>
+
+            <nav class="sidebar-nav" aria-label="Page sections">
+
+                <a href="#overview" class="active">
+                    <svg viewBox="0 0 24 24" fill="none"
+                         stroke="currentColor" stroke-width="1.8"
+                         stroke-linecap="round" stroke-linejoin="round"
+                         aria-hidden="true">
+                        <rect x="3" y="3" width="7" height="7" rx="1" />
+                        <rect x="14" y="3" width="7" height="7" rx="1" />
+                        <rect x="3" y="14" width="7" height="7" rx="1" />
+                        <rect x="14" y="14" width="7" height="7" rx="1" />
+                    </svg>
+                    Overview
+                </a>
+
+                <a href="#new-request">
+                    <svg viewBox="0 0 24 24" fill="none"
+                         stroke="currentColor" stroke-width="1.8"
+                         stroke-linecap="round" stroke-linejoin="round"
+                         aria-hidden="true">
+                        <path d="M12 5v14M5 12h14" />
+                    </svg>
+                    Request a return
+                </a>
+
+                <a href="#history">
+                    <svg viewBox="0 0 24 24" fill="none"
+                         stroke="currentColor" stroke-width="1.8"
+                         stroke-linecap="round" stroke-linejoin="round"
+                         aria-hidden="true">
+                        <path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01" />
+                    </svg>
+                    My requests
+                </a>
+
+            </nav>
+
+            <div class="sidebar-foot">
+                <form asp-controller="Account"
+                      asp-action="Logout"
+                      method="post">
+
+                    @Html.AntiForgeryToken()
+
+                    <button type="submit"
+                            class="btn btn-outline-light btn-sm w-100">
+                        Logout
+                    </button>
+                </form>
+            </div>
+
+        </div>
+    </aside>
+
+    <div class="app-main">
+
+        <!-- Topbar -->
+        <header class="topbar">
+
+            <button class="btn btn-outline-light btn-sm d-lg-none"
+                    type="button"
+                    data-bs-toggle="offcanvas"
+                    data-bs-target="#sidebar"
+                    aria-controls="sidebar">
+                Menu
+            </button>
+
+            <div class="topbar-title">Customer dashboard</div>
+
+            <span class="role-chip">Customer</span>
+
+        </header>
+
+        <main class="content">
+
+            <!-- Page Heading -->
+            <div class="page-head">
+                <h2>My Dashboard</h2>
+                <p class="text-muted">
+                    Track your return requests and manage your products.
+                </p>
+            </div>
+
+            <!-- Overview Statistics -->
+            <div class="row g-3 mb-4" id="overview">
+
+                <div class="col-md-4">
+                    <div class="dashboard-card stat p-4 h-100">
+                        <p>Total requests</p>
+                        <h2>@Model.TotalRequests.ToString("D2")</h2>
+                        <small>Requests submitted</small>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="dashboard-card stat p-4 h-100">
+                        <p>Pending requests</p>
+                        <h2>@Model.PendingRequests.ToString("D2")</h2>
+                        <small>Awaiting review</small>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="dashboard-card stat p-4 h-100">
+                        <p>Approved requests</p>
+                        <h2>@Model.ApprovedRequests.ToString("D2")</h2>
+                        <small>Successfully approved</small>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="row g-4">
+
+                <!-- New Return Request -->
+                <div class="col-xl-5" id="new-request">
+
+                    <div class="dashboard-card p-4 h-100">
+
+                        <div class="card-head">
+                            <div>
+                                <h4>Request a return</h4>
+                                <p class="text-muted">
+                                    Submit the details of the product you want to return.
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Success Message -->
+                        @if (TempData["Success"] != null)
+                        {
+                            <div class="alert alert-success">
+                                @TempData["Success"]
+                            </div>
+                        }
+
+                        <!-- Error Message -->
+                        @if (TempData["Error"] != null)
+                        {
+                            <div class="alert alert-danger">
+                                @TempData["Error"]
+                            </div>
+                        }
+
+                        <!-- Return Request Form -->
+                        <form asp-controller="Customer"
+                              asp-action="CreateReturnRequest"
+                              method="post">
+
+                            @Html.AntiForgeryToken()
+
+                            <div class="mb-3">
+                                <label for="orderId" class="form-label">
+                                    Order ID
+                                </label>
+
+                                <input type="text"
+                                       class="form-control"
+                                       id="orderId"
+                                       name="OrderId"
+                                       placeholder="e.g. ORD-1024"
+                                       maxlength="50"
+                                       required>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="productName" class="form-label">
+                                    Product name
+                                </label>
+
+                                <input type="text"
+                                       class="form-control"
+                                       id="productName"
+                                       name="ProductName"
+                                       placeholder="Enter product name"
+                                       maxlength="150"
+                                       required>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="requestType" class="form-label">
+                                    Request type
+                                </label>
+
+                                <select class="form-select"
+                                        id="requestType"
+                                        name="RequestType"
+                                        required>
+
+                                    <option value="" selected disabled>
+                                        Select request type
+                                    </option>
+
+                                    <option value="Refund">Refund</option>
+                                    <option value="Replacement">Replacement</option>
+                                    <option value="Exchange">Exchange</option>
+
+                                </select>
+                            </div>
+
+                            <div class="mb-4">
+                                <label for="reason" class="form-label">
+                                    Reason for return
+                                </label>
+
+                                <textarea class="form-control"
+                                          id="reason"
+                                          name="Reason"
+                                          rows="4"
+                                          maxlength="1000"
+                                          placeholder="Describe why you want to return this product..."
+                                          required></textarea>
+                            </div>
+
+                            <button type="submit"
+                                    class="btn btn-primary w-100">
+                                Submit return request
+                            </button>
+
+                        </form>
+
+                    </div>
+                </div>
+
+                <!-- Return Request History -->
+                <div class="col-xl-7" id="history">
+
+                    <div class="dashboard-card p-4 h-100">
+
+                        <div class="card-head">
+                            <div>
+                                <h4>My return requests</h4>
+                                <p class="text-muted">
+                                    Review the status of your submitted requests.
+                                </p>
+                            </div>
+
+                            <span class="badge">
+                                @Model.TotalRequests requests
+                            </span>
+                        </div>
+
+                        <div class="table-responsive">
+
+                            <table class="table align-middle">
+
+                                <thead>
+                                    <tr>
+                                        <th>Request ID</th>
+                                        <th>Product</th>
+                                        <th>Request type</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+
+                                    @if (Model.ReturnRequests.Any())
+                                    {
+                                        @foreach (var request in Model.ReturnRequests)
+                                        {
+                                            <tr>
+                                                <td>
+                                                    RET-@request.Id.ToString("D3")
+                                                </td>
+
+                                                <td>
+                                                    @request.ProductName
+                                                </td>
+
+                                                <td>
+                                                    @request.RequestType
+                                                </td>
+
+                                                <td>
+                                                    @if (request.Status == "Pending")
+                                                    {
+                                                        <span class="status-badge status-pending">
+                                                            Pending
+                                                        </span>
+                                                    }
+                                                    else if (request.Status == "Approved")
+                                                    {
+                                                        <span class="status-badge status-approved">
+                                                            Approved
+                                                        </span>
+                                                    }
+                                                    else if (request.Status == "Rejected")
+                                                    {
+                                                        <span class="status-badge status-rejected">
+                                                            Rejected
+                                                        </span>
+                                                    }
+                                                    else
+                                                    {
+                                                        <span class="status-badge">
+                                                            @request.Status
+                                                        </span>
+                                                    }
+                                                </td>
+                                            </tr>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <tr>
+                                            <td colspan="4" class="text-center py-4">
+                                                <p class="mb-1">
+                                                    No return requests yet.
+                                                </p>
+                                                <small class="text-muted">
+                                                    Your submitted requests will appear here.
+                                                </small>
+                                            </td>
+                                        </tr>
+                                    }
+
+                                </tbody>
+
+                            </table>
+
+                        </div>
+
+                        <div class="table-note">
+                            <small class="text-muted">
+                                Showing your submitted return requests.
+                            </small>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer py-3 mt-4">
+            <div class="px-3 px-lg-4">
+                <small class="text-muted">
+                    © 2026 ReturnFlow. Customer Portal.
+                </small>
+            </div>
+        </footer>
+
+    </div>
+</div>

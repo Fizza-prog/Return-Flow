@@ -1,0 +1,124 @@
+﻿@model ReturnFlow.Models.ViewModels.RegisterViewModel
+
+@{
+    ViewData["Title"] = "Create Account";
+}
+
+<main class="auth-page">
+    <div class="auth-container">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-6 col-md-8">
+                    <div class="auth-card p-4 p-md-5">
+
+                        <div class="text-center mb-4">
+                            <h2 class="mb-2">Create your account</h2>
+                            <p class="text-muted mb-0">
+                                Get started with a smarter return management experience.
+                            </p>
+                        </div>
+
+                        <form asp-controller="Account"
+                              asp-action="Register"
+                              method="post">
+
+                            @Html.AntiForgeryToken()
+
+                            <div asp-validation-summary="ModelOnly"
+                                 class="text-danger mb-3">
+                            </div>
+
+                            <div class="mb-3">
+                                <label asp-for="FullName" class="form-label">
+                                    Full name
+                                </label>
+
+                                <input asp-for="FullName"
+                                       class="form-control"
+                                       placeholder="Enter your full name" />
+
+                                <span asp-validation-for="FullName"
+                                      class="text-danger"></span>
+                            </div>
+
+                            <div class="mb-3">
+                                <label asp-for="Email" class="form-label">
+                                    Email address
+                                </label>
+
+                                <input asp-for="Email"
+                                       class="form-control"
+                                       placeholder="Enter your email" />
+
+                                <span asp-validation-for="Email"
+                                      class="text-danger"></span>
+                            </div>
+
+                            <div class="mb-3">
+                                <label asp-for="PhoneNumber" class="form-label">
+                                    Phone number
+                                </label>
+
+                                <input asp-for="PhoneNumber"
+                                       class="form-control"
+                                       placeholder="Enter your phone number" />
+
+                                <span asp-validation-for="PhoneNumber"
+                                      class="text-danger"></span>
+                            </div>
+
+                            <div class="mb-3">
+                                <label asp-for="Password" class="form-label">
+                                    Password
+                                </label>
+
+                                <input asp-for="Password"
+                                       class="form-control"
+                                       placeholder="Create a password" />
+
+                                <span asp-validation-for="Password"
+                                      class="text-danger"></span>
+                            </div>
+
+                            <div class="mb-4">
+                                <label asp-for="ConfirmPassword" class="form-label">
+                                    Confirm password
+                                </label>
+
+                                <input asp-for="ConfirmPassword"
+                                       class="form-control"
+                                       placeholder="Re-enter your password" />
+
+                                <span asp-validation-for="ConfirmPassword"
+                                      class="text-danger"></span>
+                            </div>
+
+                            <button type="submit"
+                                    class="btn btn-primary w-100 py-2">
+                                Create account
+                            </button>
+                        </form>
+
+                        <p class="text-center mb-0 mt-3">
+                            Already have an account?
+                            <a asp-controller="Account"
+                               asp-action="Login"
+                               class="auth-link">
+                                Sign in
+                            </a>
+                        </p>
+
+                    </div>
+
+                    <p class="text-center text-muted mt-4 small">
+                        © 2026 ReturnFlow. All rights reserved.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

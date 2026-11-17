@@ -1,0 +1,416 @@
+@model ReturnFlow.Models.ViewModels.ManagerDashboardViewModel
+
+@{
+    ViewData["BodyClass"] = "dashboard-page";
+    ViewData["Title"] = "Manager Dashboard";
+}
+
+<div class="app-shell">
+
+    <!-- Sidebar -->
+    <aside class="sidebar offcanvas-lg offcanvas-start" id="sidebar" tabindex="-1" aria-label="Sidebar">
+        <div class="sidebar-inner">
+            <div class="sidebar-head">
+                <a class="navbar-brand" asp-controller="Home" asp-action="Index">Return<span class="brand-accent">Flow</span></a>
+                <button type="button" class="btn-close btn-close-white d-lg-none" data-bs-dismiss="offcanvas" data-bs-target="#sidebar" aria-label="Close menu"></button>
+            </div>
+
+            <div class="sidebar-role">
+                <small>Signed in to</small>
+                <strong>Manager Workspace</strong>
+            </div>
+
+            <nav class="sidebar-nav" aria-label="Page sections">
+                <a href="#overview" class="active">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <rect x="3" y="3" width="7" height="7" rx="1" />
+                        <rect x="14" y="3" width="7" height="7" rx="1" />
+                        <rect x="3" y="14" width="7" height="7" rx="1" />
+                        <rect x="14" y="14" width="7" height="7" rx="1" />
+                    </svg>
+                    Overview
+                </a>
+
+                <a href="#requests">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01" />
+                    </svg>
+                    Return requests
+                </a>
+
+                <a href="#inspection">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path d="M9 11l3 3L22 4" />
+                        <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" />
+                    </svg>
+                    Product inspection
+                </a>
+            </nav>
+
+            <div class="sidebar-foot">
+                <form asp-controller="Account" asp-action="Logout" method="post">
+                    <button type="submit" class="btn btn-outline-light btn-sm w-100">Logout</button>
+                </form>
+            </div>
+        </div>
+    </aside>
+
+    <div class="app-main">
+
+        <!-- Topbar -->
+        <header class="topbar">
+            <button class="btn btn-outline-light btn-sm d-lg-none"
+                    type="button"
+                    data-bs-toggle="offcanvas"
+                    data-bs-target="#sidebar"
+                    aria-controls="sidebar">
+                Menu
+            </button>
+
+            <div class="topbar-title">Manager dashboard</div>
+            <span class="role-chip">Manager</span>
+        </header>
+
+        <main class="content">
+
+            <div class="page-head">
+                <h2>Manager Dashboard</h2>
+                <p class="text-muted">Review return requests and manage product inspections.</p>
+            </div>
+
+            <!-- Notifications -->
+            @if (TempData["Success"] != null)
+            {
+                <div class="alert alert-success">@TempData["Success"]</div>
+            }
+
+            @if (TempData["Error"] != null)
+            {
+                <div class="alert alert-danger">@TempData["Error"]</div>
+            }
+
+            <!-- Dashboard Statistics -->
+            <div class="row g-3 mb-4" id="overview">
+
+                <div class="col-sm-6 col-xl-3">
+                    <div class="dashboard-card stat p-4 h-100">
+                        <p>Total requests</p>
+                        <h2>@Model.TotalRequests</h2>
+                        <small>All submitted requests</small>
+                    </div>
+                </div>
+
+                <div class="col-sm-6 col-xl-3">
+                    <div class="dashboard-card stat p-4 h-100">
+                        <p>Pending</p>
+                        <h2>@Model.PendingRequests</h2>
+                        <small>Awaiting review</small>
+                    </div>
+                </div>
+
+                <div class="col-sm-6 col-xl-3">
+                    <div class="dashboard-card stat p-4 h-100">
+                        <p>Approved</p>
+                        <h2>@Model.ApprovedRequests</h2>
+                        <small>Accepted requests</small>
+                    </div>
+                </div>
+
+                <div class="col-sm-6 col-xl-3">
+                    <div class="dashboard-card stat p-4 h-100">
+                        <p>Rejected</p>
+                        <h2>@Model.RejectedRequests</h2>
+                        <small>Declined requests</small>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Return Requests -->
+            <section class="dashboard-card p-4 mb-4" id="requests">
+
+                <div class="card-head">
+                    <div>
+                        <h4>Return requests</h4>
+                        <p class="text-muted">Review submitted requests and take appropriate action.</p>
+                    </div>
+                    <span class="badge">Recent requests</span>
+                </div>
+
+                <div class="table-responsive">
+
+                    <table class="table align-middle">
+
+                        <thead>
+                            <tr>
+                                <th>Request ID</th>
+                                <th>Customer</th>
+                                <th>Product</th>
+                                <th>Reason</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+
+                            @if (Model.ReturnRequests.Any())
+                            {
+                                @foreach (var request in Model.ReturnRequests)
+                                {
+                                    var requestCode = "RET-" + request.Id.ToString("D3");
+
+                                    <tr>
+
+                                        <td>@requestCode</td>
+
+                                        <td>@(request.User?.FullName ?? "Unknown")</td>
+
+                                        <td>
+                                            @request.ProductName
+
+                                            @if (request.InspectedAt != null)
+                                            {
+                                                <div class="mt-2 small">
+                                                    <div>
+                                                        <strong>Condition:</strong>
+                                                        @request.ProductCondition
+                                                    </div>
+
+                                                    <div>
+                                                        <strong>Disposition:</strong>
+                                                        @request.Disposition
+                                                    </div>
+
+                                                    <div>
+                                                        <strong>Findings:</strong>
+                                                        @request.InspectionFindings
+                                                    </div>
+
+                                                    <div class="text-muted">
+                                                        <strong>Inspected:</strong>
+                                                        @request.InspectedAt.Value.ToLocalTime().ToString("dd MMM yyyy, hh:mm tt")
+                                                    </div>
+                                                </div>
+                                            }
+                                        </td>
+
+                                        <td>@request.Reason</td>
+
+                                        <td>
+                                            @if (request.Status == "Pending")
+                                            {
+                                                <span class="status-badge status-pending">Pending</span>
+                                            }
+                                            else if (request.Status == "Approved")
+                                            {
+                                                <span class="status-badge status-approved">Approved</span>
+                                            }
+                                            else if (request.Status == "Rejected")
+                                            {
+                                                <span class="status-badge status-rejected">Rejected</span>
+                                            }
+                                            else
+                                            {
+                                                <span class="status-badge">@request.Status</span>
+                                            }
+                                        </td>
+
+                                        <td>
+
+                                            @if (request.Status == "Rejected")
+                                            {
+                                                <span class="text-muted small">No action</span>
+                                            }
+                                            else
+                                            {
+                                                <div class="d-flex flex-wrap gap-2">
+
+                                                    @if (request.Status == "Pending")
+                                                    {
+                                                        <form asp-controller="Manager"
+                                                              asp-action="UpdateStatus"
+                                                              method="post"
+                                                              class="d-inline">
+
+                                                            <input type="hidden" name="id" value="@request.Id" />
+
+                                                            <button type="submit"
+                                                                    name="status"
+                                                                    value="Approved"
+                                                                    class="btn btn-sm btn-primary">
+                                                                Approve
+                                                            </button>
+
+                                                        </form>
+
+                                                        <form asp-controller="Manager"
+                                                              asp-action="UpdateStatus"
+                                                              method="post"
+                                                              class="d-inline">
+
+                                                            <input type="hidden" name="id" value="@request.Id" />
+
+                                                            <button type="submit"
+                                                                    name="status"
+                                                                    value="Rejected"
+                                                                    class="btn btn-sm btn-outline-light">
+                                                                Reject
+                                                            </button>
+
+                                                        </form>
+                                                    }
+
+                                                    <button type="button"
+                                                            class="btn btn-sm btn-outline-light"
+                                                            data-inspect="@requestCode">
+                                                        Inspect
+                                                    </button>
+
+                                                </div>
+                                            }
+
+                                        </td>
+
+                                    </tr>
+                                }
+                            }
+                            else
+                            {
+                                <tr>
+                                    <td colspan="6" class="text-center py-4">
+                                        <p class="mb-1">No return requests yet.</p>
+                                        <small class="text-muted">Customer requests will appear here.</small>
+                                    </td>
+                                </tr>
+                            }
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+                <div class="table-note">
+                    <small class="text-muted">Showing all submitted return requests.</small>
+                </div>
+
+            </section>
+
+            <!-- Product Inspection -->
+            <section class="dashboard-card p-4" id="inspection">
+
+                <div class="card-head">
+                    <div>
+                        <h4>Product inspection</h4>
+                        <p class="text-muted">Record product condition and inspection findings.</p>
+                    </div>
+                </div>
+
+                <form asp-controller="Manager"
+                      asp-action="Inspect"
+                      method="post"
+                      id="inspectionForm">
+
+                    @Html.AntiForgeryToken()
+
+                    <div class="row g-3">
+
+                        <div class="col-md-6">
+
+                            <label for="requestId" class="form-label">
+                                Return request ID
+                            </label>
+
+                            <input type="text"
+                                   class="form-control"
+                                   id="requestId"
+                                   name="RequestId"
+                                   placeholder="e.g. RET-001"
+                                   maxlength="30"
+                                   required />
+
+                        </div>
+
+                        <div class="col-md-6">
+
+                            <label for="condition" class="form-label">
+                                Product condition
+                            </label>
+
+                            <select class="form-select"
+                                    id="condition"
+                                    name="Condition"
+                                    required>
+
+                                <option value="" selected disabled>Select product condition</option>
+                                <option value="Excellent">Excellent</option>
+                                <option value="Good">Good</option>
+                                <option value="Damaged">Damaged</option>
+                                <option value="Defective">Defective</option>
+
+                            </select>
+
+                        </div>
+
+                        <div class="col-12">
+
+                            <label for="findings" class="form-label">
+                                Inspection findings
+                            </label>
+
+                            <textarea class="form-control"
+                                      id="findings"
+                                      name="Findings"
+                                      rows="4"
+                                      maxlength="1000"
+                                      placeholder="Describe the inspection results..."
+                                      required></textarea>
+
+                        </div>
+
+                        <div class="col-md-6">
+
+                            <label for="disposition" class="form-label">
+                                Product disposition
+                            </label>
+
+                            <select class="form-select"
+                                    id="disposition"
+                                    name="Disposition"
+                                    required>
+
+                                <option value="" selected disabled>Select disposition</option>
+                                <option value="Restock">Restock</option>
+                                <option value="Repair">Repair</option>
+                                <option value="Replace">Replace</option>
+                                <option value="Discard">Discard</option>
+
+                            </select>
+
+                        </div>
+
+                        <div class="col-12">
+
+                            <button type="submit" class="btn btn-primary px-4">
+                                Save inspection
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </form>
+
+            </section>
+
+        </main>
+
+        <footer class="footer py-3 mt-4">
+            <div class="px-3 px-lg-4">
+                <small class="text-muted">&copy; 2026 ReturnFlow. Manager Portal.</small>
+            </div>
+        </footer>
+
+    </div>
+</div>

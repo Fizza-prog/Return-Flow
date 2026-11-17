@@ -1,0 +1,95 @@
+﻿@model ReturnFlow.Models.ViewModels.LoginViewModel
+
+@{
+    ViewData["Title"] = "Login";
+}
+
+<main class="auth-page">
+    <div class="auth-container">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-5 col-md-7">
+                    <div class="auth-card p-4 p-md-5">
+
+                        <div class="text-center mb-4">
+                            <h2 class="mb-2">Sign in to ReturnFlow</h2>
+                            <p class="text-muted mb-0">
+                                Access your workspace and manage your returns.
+                            </p>
+                        </div>
+
+                        <form asp-controller="Account"
+                              asp-action="Login"
+                              method="post">
+
+                            @Html.AntiForgeryToken()
+
+                            <div asp-validation-summary="ModelOnly"
+                                 class="text-danger mb-3">
+                            </div>
+
+                            <div class="mb-3">
+                                <label asp-for="Email" class="form-label">
+                                    Email address
+                                </label>
+
+                                <input asp-for="Email"
+                                       class="form-control"
+                                       placeholder="Enter your email" />
+
+                                <span asp-validation-for="Email"
+                                      class="text-danger"></span>
+                            </div>
+
+                            <div class="mb-3">
+                                <label asp-for="Password" class="form-label">
+                                    Password
+                                </label>
+
+                                <input asp-for="Password"
+                                       class="form-control"
+                                       placeholder="Enter your password" />
+
+                                <span asp-validation-for="Password"
+                                      class="text-danger"></span>
+                            </div>
+
+                            <div class="form-check mb-4">
+                                <input asp-for="RememberMe"
+                                       class="form-check-input" />
+
+                                <label asp-for="RememberMe"
+                                       class="form-check-label">
+                                    Remember me
+                                </label>
+                            </div>
+
+                            <button type="submit"
+                                    class="btn btn-primary w-100 py-2">
+                                Sign in
+                            </button>
+                        </form>
+
+                        <p class="text-center mb-0 mt-3">
+                            Don't have an account?
+                            <a asp-controller="Account"
+                               asp-action="Register"
+                               class="auth-link">
+                                Create an account
+                            </a>
+                        </p>
+
+                    </div>
+
+                    <p class="text-center text-muted mt-4 small">
+                        © 2026 ReturnFlow. All rights reserved.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
